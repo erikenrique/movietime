@@ -26,17 +26,6 @@ A web application designed for movie enthusiasts to create and share reviews, ra
 ## Installation and Setup 🚀
 
 Follow these steps to run MovieTime locally:
-
-1. **Clone the repository:**
-
-   ```bash
-   git clone https://github.com/erikenrique/movietime.git
-   cd movietime
-
-2. **Install dependencies**:
-   ```bash
-    npm install
-
    
 ### Steps to Install
 
