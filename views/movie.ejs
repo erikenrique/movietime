@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>movietime :: <%= movie.title %>
+    </title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="/movie.css">
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body class="movie-page">
+    <div class="jumbotron text-center" id="postLoginHeader">
+        <div class="logo-container">
+          <a href="/profile">
+            <img src="../img/logo-movietime.png" alt="movietime logo">
+          </a>
+        </div>
+        <a href="/logout" class="btn btn-default btn-sm">Logout</a>
+    </div>
+
+
+    <main>
+        <section class="movie-details">
+            <h1><%= movie.title %></h1>
+            <img src="https://image.tmdb.org/t/p/w500<%= movie.poster_url %>" alt="<%= movie.title %> Poster" />            
+            <div class="rating">Average Rating:
+                <span>
+                    <% for (let i=0; i < Math.round(movie.avg_rating); i++) { %>
+                        ⭐
+                    <% } %>
+                </span>
+            </div>
+            <p><strong>Release Date:</strong> <%= movie.release_date %></p>
+            <p><strong>Overview:</strong> <%= movie.overview %></p>
+        </section>
+
+        <section class="comments">
+            <h2>Comment Section</h2>
+            <ul>
+                <% if (movie.comments && movie.comments.length> 0) { %>
+                    <% movie.comments.forEach(comment=> { %>
+                        <li><%= comment %></li>
+                    <% }) %>
+                <% } else { %>
+                    <li>no comments made. add yours!</li>
+                <% } %>
+            </ul>
+
+
+            <form id="comment-form" action="/movie/<%= movie._id %>/comment" method="POST">
+                <div class="form-group">
+                    <textarea name="comment" rows="3" placeholder="Add your comment" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Post Comment</button>
+            </form>
+
+        </section>
+
+        <section class="latest-reviews">
+            <h2>Latest Reviews</h2>
+            <div class="review-cards">
+                <% reviews.forEach(review=> { %>
+                    <div class="review-card">
+                        <div class="rating">
+                            <% for (let i=0; i < review.rating; i++) { %>
+                                ⭐
+                            <% } %>
+                        </div>
+                        <p><strong><%= review.movie_title %></strong></p>
+                        <p><%= review.text %></p>
+                        <p>By <%= review.userId %> on <%= new Date(review.createdAt).toLocaleDateString() %></p>
+                    </div>
+                <% }) %>
+            </div>
+        </section>
+    </main>
+</body>
+
+</html>

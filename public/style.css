@@ -1,7 +1,162 @@
-body{
-  padding-top:80px;
-  word-wrap:break-word;
+:root {
+  --normalgreen: #09683a;
+  --darkergreen: #044526;
+  --white: #F8F1FF;
+  --blue: #77ACA2;
+  --lighterblue: #acd5ce;
+  --rose: #AA4465;
 }
-img{
-  height: 200px;
+
+body{
+  word-wrap:break-word;
+  background: linear-gradient(var(--normalgreen),var(--darkergreen));
+  min-height: 100vh;
+  color: white;
+}
+
+.container {
+  margin: auto;
+}
+
+.btn-primary {
+  background: #20b50c;
+  border-color: #20b50c;
+}
+
+.btn-warning{
+  background: #20b50c;
+  border-color: #20b50c;
+}
+
+.btn-warning:hover,.btn-warning:focus,.btn-warning:active,.btn-warning.active,.open .dropdown-toggle.btn-warning, .btn-primary:hover, .btn-primary:focus, .btn-primary:active {
+  color: #fff;
+  background-color: darkgreen;
+  border-color: rgb(0, 56, 0);
+}
+
+.jumbotron {
+  background: none;
+}
+
+.logo-container {
+  margin: auto;
+  /* display: flex; */
+  align-items: center;
+}
+
+.logo-container img {
+  display: block;
+  height: auto;
+  margin: auto;
+}
+
+.profile-page .logo-container img,
+.movie-page .logo-container img {
+    width: 10%;
+}
+
+.index-page .logo-container img {
+    width: 20%;
+}
+
+
+.logo-container:nth-child(2){
+  margin-bottom: 50px;
+}
+
+.logo-header img {
+  width: 20%;
+  margin: auto;
+  display: block;
+}
+
+#postLoginHeader a {
+  text-align: center;
+}
+
+.container {
+  padding: 2rem 0rem;
+}
+
+h4 {
+  margin: 2rem 0rem 1rem;
+}
+
+.table-image {
+  td, th {
+    vertical-align: middle;
+  }
+}
+
+.table-striped>tbody>tr:nth-child(even)>td, 
+.table-striped>tbody>tr:nth-child(even)>th {
+   background: var(--lighterblue); 
+ }
+
+ .table-striped {
+  background: var(--white);
+  border-radius: 10px;
+ }
+
+.img-thumbnail{
+  width: 20%;
+}
+
+.thumbnail {
+  width: 80px;
+  height: auto;
+  object-fit: cover;
+  cursor: pointer;
+  transition: transform 0.2s ease; /* for hovering over the image preview (thumbnail) */
+}
+
+.thumbnail:hover {
+  transform: scale(1.1);
+}
+
+.overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 999;
+}
+
+.popup {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--rose);
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 90%;
+  max-height: 90%;
+  z-index: 1000;
+}
+
+.popup img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.hidden {
+  display: none;
+}
+
+.star-rating .fa-star {
+  color: gold;
+}
+
+.table {
+  color: black;
+}
+
+#movie-suggestions {
+  color: black;
 }

@@ -1,68 +1,200 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>21 Savage Fan Site</title>
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <!-- Existing CSS and JS links -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.bootstrap.css">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+
+    <script defer src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script defer src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script defer src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
+    <script defer src="https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap.js"></script>
+    <script defer src="main.js"></script>
+
+    <link rel="shortcut icon" href="favicon.ico">
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
-<div class="container">
+<body class="profile-page">
 
-    <div class="page-header text-center">
-        <h1><span class="fa fa-anchor"></span> Profile Page</h1>
-        <a href="/logout" class="btn btn-default btn-sm">Logout</a>
+  <div class="jumbotron text-center" id="postLoginHeader">
+    <div class="logo-container">
+      <a href="/profile">
+        <img src="img/logo-movietime.png" alt="movietime logo">
+      </a>
     </div>
+    <a href="/logout" class="btn btn-default btn-sm">Logout</a>
+  </div>
+  
+  
 
-    <div class="row">
+  <div class="container">
+      <h1>welcome <%= user.local.username %></h1>
 
-        <!-- LOCAL INFORMATION -->
-        <div class="col-sm-6">
-            <div class="well">
-                <h3><span class="fa fa-user"></span> Local</h3>
+      <button class="btn btn-primary" id="add-movie-button">
+        <i class="fa fa-plus"></i> add movie
+      </button>
 
-                <% if (user.local.email) { %>
-                    <p>
-                        <strong>id</strong>: <%= user._id %><br>
-                        <strong>email</strong>: <%= user.local.email %><br>
-                        <strong>password</strong>: <%= user.local.password %>
-                    </p>
-
-                    <a href="/unlink/local" class="btn btn-default">Unlink</a>
+      <!-- USER REVIEWS TABLE -->
+      <h2>your movie reviews:</h2>
+      <table class="table table-striped table-responsive">
+        <thead>
+            <tr>
+                <th>Poster</th>
+                <th>Title</th>
+                <th>Rating</th>
+                <th>Review</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+          <% reviews.forEach(review => { %>
+            <tr>
+              <!-- Poster column -->
+              <td>
+                  <% if (review.poster_path) { %>
+                  <img
+                    src="https://image.tmdb.org/t/p/w200<%= review.poster_path %>"
+                    alt="<%= review.movie_title %> Poster"
+                    class="thumbnail popup-trigger"
+                    data-popup-content='<img src="https://image.tmdb.org/t/p/w200<%= review.poster_path %>" />'
+                  />
                 <% } else { %>
-                    <a href="/connect/local" class="btn btn-default">Connect Local</a>
+                  <span>No Poster</span>
                 <% } %>
+              </td>
+        
+              <!-- Movie Title column -->
+              <td>
+                <a href="/movie/<%= review.movieId %>"><%= review.movie_title %></a>
+              </td>
+        
+              <!-- Rating column -->
+              <td>
+                <span class="star-rating">
+                  <% for (let s = 0; s < review.rating; s++) { %>
+                    <i class="fa fa-star"></i>
+                  <% } %>
+                </span>
+              </td>
+        
+              <!-- Review Text column -->
+              <td>
+                <%= review.text %>
+              </td>
+        
+              <!-- Actions column -->
+              <td>
+                <!-- EDIT -->
+                <span>
+                  <i class="fa fa-edit popup-trigger" 
+                      data-popup-content="Edit functionality placeholder" 
+                      data-movie-id="<%= review._id %>" 
+                      data-movie-title="<%= review.movie_title %>" 
+                      data-rating="<%= review.rating %>" 
+                      data-review="<%= review.text %>"></i>
+                </span>
+        
+                <!-- DELETE -->
+                <span>
+                  <i class="fa fa-trash-o delete-btn" data-review-id="<%= review._id %>"></i>
+                </span>
+              </td>
+            </tr>
+          <% }) %>
+        </tbody>
+        
+    </table>
+  </div>
 
+  <!-- ADD MOVIE FORM -->
+  <div id="add-movie-form-window" class="hidden">
+      <h2>Add a Movie Review</h2>
+      <form id="add-movie-form" action="/profile/add-movie" method="POST">
+        <!-- Movie search -->
+        <div class="form-group">
+          <label for="movie-search">Search for a Movie</label>
+          <input
+            type="text"
+            id="movie-search"
+            class="form-control"
+            placeholder="Type a movie name"
+            required
+          />
+          <ul id="movie-suggestions" class="list-group"></ul>
+    
+          <!-- hidden fields (movie title, poster path) -->
+          <input type="hidden" name="movie_title" id="movie-title" class="form-control" required/>
+          <input type="hidden" name="poster_path" id="poster-path" />
+          <input type="hidden" id="release-date" name="release_date" />
+          <input type="hidden" id="overview" name="overview" />
+
+        </div>
+    
+        <!-- poster preview -->
+        <div class="form-group">
+          <label>Poster</label>
+          <img id="movie-poster" src="" alt="Movie Poster" style="width: 100px; display: none;" />
+        </div>
+    
+        <!-- rating -->
+        <div class="form-group">
+          <label>Rating</label>
+          <input
+            type="number"
+            name="rating"
+            placeholder="Rating (1-5)"
+            min="1"
+            max="5"
+            class="form-control"
+            required
+          />
+        </div>
+    
+        <!-- Review -->
+        <div class="form-group">
+          <label>Review</label>
+          <textarea
+            name="review"
+            placeholder="Write your review"
+            class="form-control"
+            required
+          ></textarea>
+        </div>
+    
+        <button type="submit" class="btn btn-success">Add Movie</button>
+      </form>
+    </div>
+    
+    <!-- EDIT MOVIE FORM -->
+    <div id="original-edit-form-container">
+      <div id="edit-movie-form-window" class="hidden">
+        <h2>Edit Movie Review</h2>
+        <form id="edit-movie-form" action="/profile/edit-review" method="POST">
+            <input type="hidden" name="movie_id" id="edit-movie-id">
+            <div class="form-group">
+              <label for="edit-movie-title">Movie Title</label>
+              <input type="text" name="movie_title" id="edit-movie-title" class="form-control" readonly>
             </div>
-        </div>
-        <div class="col-sm-6">
-          <h3>Messages</h3>
-          <ul class="messages">
-          <% for(var i=0; i<messages.length; i++) {%>
-            <li class="message">
-              <span><%= messages[i].name %></span>
-              <span><%= messages[i].msg %></span>
-              <span><%= messages[i].thumbUp %></span>
-              <span><i class="fa fa-thumbs-up" aria-hidden="true"></i></span>
-              <span><i class="fa fa-thumbs-down" aria-hidden="true"></i></span>
-              <span><i class="fa fa-trash" aria-hidden="true"></i></span>
-            </li>
-          <% } %>
-          </ul>
-
-          <h2>Add a message</h2>
-        <% if (user.local.email) { %>
-          <form action="/messages" method="POST">
-            <input type="text" value="<%= user.local.email %>" name="name">
-            <input type="text" placeholder="message" name="msg">
-            <button type="submit">Submit</button>
+            <div class="form-group">
+              <label for="edit-rating">Rating</label>
+              <input type="number" name="rating" id="edit-rating" class="form-control" min="1" max="5">
+            </div>
+            <div class="form-group">
+              <label for="edit-review">Review</label>
+              <textarea name="review" id="edit-review" class="form-control"></textarea>
+            </div>
+            <button type="submit" class="btn btn-success">Save Changes</button>
           </form>
-        </div>
-        <% } %>
-
-</div>
-
-<script src="main.js"></script>
-
+      </div>
+    </div>
+    
+  <div class="overlay"></div>
+  <div class="popup">
+    <img id="popupImage"src="" alt="Expanded Image">
+  </div>
 </body>
 </html>

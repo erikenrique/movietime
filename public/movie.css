@@ -1,0 +1,158 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(var(--normalgreen), var(--darkergreen));
+    color: white;
+}
+
+main {
+    width: 90%;
+    margin: auto;
+    padding: 20px 0;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 2%;
+}
+
+/* LOGO */
+
+.logo-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.logo-container img {
+    width: 15%;
+    height: auto;
+}
+
+/* MOVIE OVERVIEW  */
+
+.movie-details {
+    max-width: 800px;
+    margin: 0 auto; 
+    text-align: center;
+  }
+
+.movie-details img {
+    width: 300px;
+    height: auto;
+    margin: 20px 0;
+    border-radius: 10px;
+}
+
+.movie-details h1 {
+    font-size: 2.5rem;
+    margin: 10px 0;
+}
+
+.movie-details .rating span {
+    color: gold;
+    font-size: 1.2rem;
+}
+
+.movie-details p {
+    margin-top: 10px;
+    margin-bottom: 15px;
+    line-height: 1.5;
+  }
+
+.movie-details p strong {
+    font-weight: bold;
+    color: var(--white);
+}
+
+/* CHAT */
+
+.comments {
+    background: var(--lighterblue);
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    max-width: 800px; 
+    margin: 0 auto; 
+}
+
+.comments h2 {
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+    color: black;
+}
+
+.comments ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0 auto;
+}
+
+.comments li {
+    background: var(--white);
+    color: black;
+    margin: 5px 0;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.comments textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: none;
+    resize: none;
+}
+
+.comments button {
+    background: var(--normalgreen);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: block;
+    margin: 10px auto;
+}
+
+.comments button:hover {
+    background: var(--darkergreen);
+}
+
+/* Review cards */
+
+.latest-reviews {
+    margin-top: 30px;
+}
+
+.latest-reviews h2 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.review-cards {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.review-card {
+    width: 250px;
+    background: var(--white);
+    color: black;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    padding: 15px;
+}
+
+.review-card .rating {
+    margin: 10px 0;
+    color: gold;
+    font-size: 1.2rem;
+}
+
+.review-card p {
+    font-size: 1rem;
+    margin: 10px 0;
+}
