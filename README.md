@@ -1,13 +1,12 @@
 # MovieTime 🎥
 
-A web application designed for movie enthusiasts to create and share reviews, rate their favorite movies, and engage in discussions on central movie pages. MovieTime makes it easy to keep all your movie opinions and discussions in one place.
-
+A place to create and share reviews, rate favorite movies, and chat about anything movies. MovieTime makes it easy to keep all your movie opinions and discussions in one place!
 
 ---
 
 ## Features 🌟
 
-- **Browse Movies**: Search and filter through an extensive database of movies by title, genre, and release year.
+- **Browse Movies**: Search and filter through an extensive database of movies (powered by the TMDB API)
 - **Detailed Information**: Access comprehensive details about your favorite movies, including ratings, cast, and plot summaries.
 - **Watchlist Management**: Save movies to your personalized watchlist to keep track of what to watch next.
 - **Responsive Design**: Optimized for use across devices – mobile, tablet, or desktop.
